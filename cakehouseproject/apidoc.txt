@@ -1,0 +1,19 @@
+1)registration
+================
+
+url:http://127.0.0.1:8000/cakeapi/register/
+method:post
+body:{"username","password","email","phone","address"}
+authorization:nill
+
+
+2)cake list api
+
+url:http://127.0.0.1:8000/cakeapi/cakes/
+method: get
+authorization:nill
+status:completed
+
+3)cake details
+url:http://127.0.0.1:8000/api/cakes/{id}/
+method:get
