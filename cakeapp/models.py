@@ -1,6 +1,7 @@
 from django.db import models
 # Create your models here.
 from django.contrib.auth.models import AbstractUser
+from datetime import date
 
 
 class User(AbstractUser):
@@ -36,7 +37,21 @@ class Cakes(models.Model):
     flavour=models.CharField(max_length=200,choices=options,default="choclate")
     image=models.ImageField(upload_to="images")
 
-    # def varients(self)
+    @property
+    def varients(self):
+        qs=self.cakevarients_set.all()
+        return qs
+    
+    @property
+    def reviews(self):
+        qs=self.reviews_set.all()
+        return qs
+    
+    @property
+    def avg_rating(self):
+        ratings=self.reviews_set.all().values_list("rating",flat=True)
+        return sum(ratings)/len(ratings) if ratings else 0
+
     
     def __str__(self):
         return self.name
@@ -58,6 +73,16 @@ class CakeVarients(models.Model):
     )
     shape=models.CharField(max_length=200,choices=option,default="round")
     cake=models.ForeignKey(Cakes,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.cake.name
+    
+    @property
+    def offers(self):
+        current_date=date.today()
+        qs=self.offers_set.all()
+        qs=qs.filter(due_date__gte=current_date)
+        return qs
 
 
 
@@ -101,7 +126,7 @@ from django.core.validators import MinValueValidator,MaxValueValidator
 
 class Reviews(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    cakevarient=models.ForeignKey(CakeVarients,on_delete=models.CASCADE)
+    cake=models.ForeignKey(Cakes,null=True,on_delete=models.SET_NULL)
     rating=models.PositiveIntegerField(validators=[MinValueValidator(1),MaxValueValidator(5)])
     comment=models.CharField(max_length=300)
 

@@ -11,9 +11,66 @@ authorization:nill
 
 url:http://127.0.0.1:8000/cakeapi/cakes/
 method: get
-authorization:nill
+//authorization:username,password
+headers:token
 status:completed
 
 3)cake details
-url:http://127.0.0.1:8000/api/cakes/{id}/
+url:http://127.0.0.1:8000/cakeapi/cakes/{id}/
 method:get
+//authorization:username,password
+headers:token
+
+4) add to cart api
+url:http://127.0.0.1:8000/cakeapi/cakes/{varient_id}/cart_add/
+method:post
+//authorization:username,password
+headers:token
+body:nill
+
+
+5)cart list api
+url:http://127.0.0.1:8000/cakeapi/carts/
+method:get
+//authorization:username,password
+headers:token
+body:nill
+
+6)cart delete
+url:http://127.0.0.1:8000/cakeapi/carts/{cart_id}/
+method:delete
+//authorization:username,password
+headers:token
+body:nill
+
+7)place order
+url:http://127.0.0.1:8000/cakeapi/cakes/{varient_id}/place_order/
+method:post
+body:address
+//authorization:username,password
+headers:token
+
+8)order list
+url:http://127.0.0.1:8000/cakeapi/orders/
+method:get
+//authorization:username,password
+headers:token
+body:nill
+
+9)order remove
+url:http://127.0.0.1:8000/cakeapi/orders/{id}/
+method:delete
+body:nill
+headers:username,password
+headers:token
+
+10)obtain token
+url:http://127.0.0.1:8000/cakeapi/token/
+method:post
+body:username,password
+headers:nill
+
+11)add_review
+url:http://127.0.0.1:8000/cakeapi/cakes/{cake_id}/add_review/
+method:post
+headers:token
